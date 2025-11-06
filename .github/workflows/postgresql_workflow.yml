@@ -42,18 +42,15 @@ jobs:
       run: |
         sleep 10
 
-    - name: Set up database schema and data
-      run: |
-        PGPASSWORD=postgres psql -h localhost -U postgres -d test_db -f 01_create_tables.sql
-
-    - name: Insert data
-      run: |
-        PGPASSWORD=postgres psql -h localhost -U postgres -d test_db -f 02_insert_data.sql      
-
     - name: Create views
       run: |
-        PGPASSWORD=postgres psql -h localhost -U postgres -d test_db -f 03_create_views.sql          
-        
+        echo "Creating stored procedures..."
+        PGPASSWORD=postgres psql -h localhost -U postgres -d test_db -f calcular_descuento.sql
+        PGPASSWORD=postgres psql -h localhost -U postgres -d test_db -f contiene_correo.sql
+        PGPASSWORD=postgres psql -h localhost -U postgres -d test_db -f dia_semanal.sql
+        PGPASSWORD=postgres psql -h localhost -U postgres -d test_db -f num_empleados.sql
+        PGPASSWORD=postgres psql -h localhost -U postgres -d test_db -f stock_minimo.sql
+
     - name: Run tests
       run: |
         pytest
