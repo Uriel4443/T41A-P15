@@ -16,7 +16,6 @@ def conexion():
 
 
 def test_calcular_descuento(conexion):
-    """Debe calcular correctamente el descuento aplicado a un producto."""
     cur = conexion.cursor()
     cur.execute("SELECT calcular_descuento(100, 0.2);")
     resultado = cur.fetchone()[0]
@@ -25,7 +24,6 @@ def test_calcular_descuento(conexion):
 
 
 def test_contiene_correo(conexion):
-    """Debe validar correctamente si un correo contiene '@'."""
     cur = conexion.cursor()
     cur.execute("SELECT contiene_correo('usuario@gmail.com');")
     assert cur.fetchone()[0] is True
@@ -36,7 +34,6 @@ def test_contiene_correo(conexion):
 
 
 def test_dia_semanal(conexion):
-    """Debe devolver el nombre correcto del día de la semana."""
     cur = conexion.cursor()
     # 2024-05-06 fue lunes
     cur.execute("SELECT dia_semanal('2024-05-06');")
@@ -46,16 +43,14 @@ def test_dia_semanal(conexion):
 
 
 def test_num_empleados(conexion):
-    """Debe contar correctamente los empleados en un departamento."""
     cur = conexion.cursor()
-    cur.execute("SELECT num_empleados(2);")  # En tu script, hay 3 empleados con departamento 2
+    cur.execute("SELECT num_empleados(2);")  #Hay 3 empleados con departamento 2
     resultado = cur.fetchone()[0]
     assert resultado == 3
     cur.close()
 
 
 def test_stock_minimo(conexion):
-    """Debe devolver productos con stock menor a la cantidad mínima dada."""
     cur = conexion.cursor()
     cur.execute("SELECT * FROM stock_minimo(10);")
     resultados = cur.fetchall()
@@ -63,6 +58,6 @@ def test_stock_minimo(conexion):
     nombres = [r[1] for r in resultados]
     assert 'Impresora HP' in nombres
     assert 'Silla Ergonómica' in nombres
-    assert all(isinstance(r[0], int) for r in resultados)  # IDs deben ser enteros
+    assert all(isinstance(r[0], int) for r in resultados) 
     cur.close()
 
